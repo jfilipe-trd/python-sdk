@@ -82,7 +82,8 @@ class DaprClient(DaprGrpcClient):
             content_type: Optional[str] = None,
             metadata: Optional[MetadataTuple] = None,
             http_verb: Optional[str] = None,
-            http_querystring: Optional[MetadataTuple] = None) -> InvokeMethodResponse:
+            http_querystring: Optional[MetadataTuple] = None,
+            return_coroutine: bool = False) -> InvokeMethodResponse:
         """Invoke a service method over gRPC or HTTP.
 
         Args:
@@ -105,7 +106,8 @@ class DaprClient(DaprGrpcClient):
                 content_type=content_type,
                 metadata=metadata,
                 http_verb=http_verb,
-                http_querystring=http_querystring)
+                http_querystring=http_querystring,
+                return_coroutine=return_coroutine)
         else:
             return super().invoke_method(
                 app_id,
