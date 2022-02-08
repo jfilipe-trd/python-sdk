@@ -63,6 +63,36 @@ with DaprClient() as d:
 - For a full list of state operations visit [How-To: Get & save state]({{< ref howto-get-save-state.md >}}).
 - Visit [Python SDK examples](https://github.com/dapr/python-sdk/tree/master/examples/state_store) for code samples and instructions to try out state management
 
+### Query application state (Alpha)
+
+```python
+    from dapr import DaprClient
+
+    query = '''
+    {
+        "filter": {
+            "EQ": { "value.state": "CA" }
+        },
+        "sort": [
+            {
+                "key": "value.person.id",
+                "order": "DESC"
+            }
+        ]
+    }
+    '''
+
+    with DaprClient() as d:
+        resp = d.query_state(
+            store_name='state_store',
+            query=query,
+            states_metadata={"metakey": "metavalue"},  # optional
+        )
+```
+
+- For a full list of state store query options visit [How-To: Query state]({{< ref howto-state-query-api.md >}}).
+- Visit [Python SDK examples](https://github.com/dapr/python-sdk/tree/master/examples/state_store_query) for code samples and instructions to try out state store querying.
+
 ### Publish & subscribe to messages
 
 ##### Publish messages
@@ -125,6 +155,19 @@ with DaprClient() as d:
 
 - For a full guide on secrets visit [How-To: Retrieve secrets]({{< ref howto-secrets.md >}}).
 - Visit [Python SDK examples](https://github.com/dapr/python-sdk/tree/master/examples/secret_store) for code samples and instructions to try out retrieving secrets
+
+### Get configuration
+
+```python
+from dapr.clients import DaprClient
+
+with DaprClient() as d:
+    # Get Configuration
+    configuration = d.get_configuration(store_name='configurationstore', keys=['orderId'], config_metadata={})
+```
+
+- For a full list of state operations visit [How-To: Get & save state]({{< ref howto-manage-configuration.md >}}).
+- Visit [Python SDK examples](https://github.com/dapr/python-sdk/tree/master/examples/configuration) for code samples and instructions to try out state management
 
 ## Related links
 - [Python SDK examples](https://github.com/dapr/python-sdk/tree/master/examples)
